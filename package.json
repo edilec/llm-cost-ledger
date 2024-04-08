@@ -1,13 +1,16 @@
 {
   "name": "llm-cost-ledger",
-  "version": "0.0.0",
-  "description": "Record model usage, token counts, prices and workflow cost per outcome.",
+  "version": "0.1.0",
+  "description": "Audit exported model usage against supplied dated prices and workflow budgets, offline.",
   "type": "module",
   "engines": {
     "node": ">=22"
   },
   "scripts": {
-    "test": "node --test"
+    "lint": "node --check src/index.mjs && node --check src/decimal.mjs && node --check bin/llm-cost-ledger.mjs && node --check test/ledger.test.mjs",
+    "test": "node --test",
+    "example": "node bin/llm-cost-ledger.mjs --root examples/clean --usage usage.json --prices prices.json --json",
+    "check": "npm run lint && npm test && npm run example && npm pack --dry-run"
   },
   "license": "MIT",
   "repository": {

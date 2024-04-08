@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1",
+  "workflows": [{ "id": "weekly-review", "outcome": "success", "budget": "0.050000" }],
+  "usages": [
+    { "id": "step-one", "workflowId": "weekly-review", "model": "fixture-small", "date": "2026-06-30", "inputTokens": 1000, "outputTokens": 500, "cacheReadTokens": 200 },
+    { "id": "step-two", "workflowId": "weekly-review", "model": "fixture-small", "date": "2026-07-01", "inputTokens": 1000, "outputTokens": 500, "cacheReadTokens": 200 }
+  ]
+}

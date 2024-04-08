@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "1",
+  "prices": [
+    { "model": "fixture-small", "effectiveDate": "2026-01-01", "inputPerMillion": "1.000000", "outputPerMillion": "2.000000", "cacheReadPerMillion": "0.500000" },
+    { "model": "fixture-small", "effectiveDate": "2026-07-01", "inputPerMillion": "2.000000", "outputPerMillion": "3.000000", "cacheReadPerMillion": "0.250000" }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "1",
+  "workflows": [{ "id": "offline-fixture", "outcome": "failure", "budget": "0.020000" }],
+  "usages": [
+    { "id": "unknown-step", "workflowId": "offline-fixture", "model": "unpriced-fixture", "date": "2026-08-01", "inputTokens": 1000, "outputTokens": 100, "cacheReadTokens": 0 }
+  ]
+}
