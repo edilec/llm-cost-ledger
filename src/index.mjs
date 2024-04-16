@@ -1,6 +1,7 @@
 import { readFile, realpath, stat } from 'node:fs/promises'
 import { isAbsolute, resolve, sep } from 'node:path'
 import { budgetPicos, decimalMicros, dollars } from './decimal.mjs'
+import { hasDuplicateKeys } from './json.mjs'
 
 export const TOOL_ID = 'llm-cost-ledger'
 export class ConfigError extends Error {}
@@ -116,7 +117,11 @@ async function load(root, name, limits, label) {
       return { problem: finding('input-too-large', name, '', `${label} exceeds maxDocumentBytes and was not parsed.`) }
     }
     const text = new TextDecoder('utf-8', { fatal: true }).decode(bytes)
-    return { value: JSON.parse(text) }
+    const value = JSON.parse(text)
+    if (hasDuplicateKeys(text)) {
+      return { problem: finding('input-invalid', name, '', `${label} has duplicate JSON keys; earlier values cannot be ignored.`) }
+    }
+    return { value }
   } catch {
     return { problem: finding('input-unreadable', name, '', `${label} could not be decoded or parsed as JSON.`) }
   }

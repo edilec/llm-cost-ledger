@@ -7,7 +7,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "lint": "node --check src/index.mjs && node --check src/decimal.mjs && node --check bin/llm-cost-ledger.mjs && node --check test/ledger.test.mjs",
+    "lint": "node --check src/index.mjs && node --check src/decimal.mjs && node --check src/json.mjs && node --check bin/llm-cost-ledger.mjs && node --check test/ledger.test.mjs",
     "test": "node --test",
     "example": "node bin/llm-cost-ledger.mjs --root examples/clean --usage usage.json --prices prices.json --json",
     "check": "npm run lint && npm test && npm run example && npm pack --dry-run"

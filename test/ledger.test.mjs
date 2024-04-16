@@ -182,6 +182,23 @@ test('wrong-shaped and unparseable inputs never leak a synthetic canary', async 
   assert.ok(!JSON.stringify(report).includes('synthetic-secret-value'))
 })
 
+test('duplicate JSON keys in either input are ambiguous, even when the last value is valid', async (t) => {
+  const options = await fixture(t)
+  await writeFile(join(options.root, options.usage), JSON.stringify(CLEAN_USAGE).replace('"inputTokens":1000000', '"inputTokens":null,"inputTokens":1000000'))
+  const usageReport = await auditCosts(options)
+  assert.equal(usageReport.status, 'incomplete')
+  assert.deepEqual(usageReport.usages, [])
+  const usageRun = cli(['--root', options.root, '--usage', options.usage, '--prices', options.prices, '--json'])
+  assert.equal(usageRun.status, 2)
+  assert.equal(JSON.parse(usageRun.stdout).status, 'incomplete')
+
+  await writeFile(join(options.root, options.usage), JSON.stringify(CLEAN_USAGE))
+  await writeFile(join(options.root, options.prices), JSON.stringify(CLEAN_PRICES).replace('"model":"local-small"', '"model":"unpriced","model":"local-small"'))
+  const priceReport = await auditCosts(options)
+  assert.equal(priceReport.status, 'incomplete')
+  assert.deepEqual(priceReport.usages, [])
+})
+
 test('an empty workflow or an empty export is incomplete, never a vacuous pass', async (t) => {
   const usage = structuredClone(CLEAN_USAGE)
   usage.workflows.push({ id: 'unused', outcome: 'failure' })
